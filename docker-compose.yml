@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+  dito.autocomplete:
+    image: ${DOCKER_REGISTRY-}ditoautocomplete
+    build:
+      context: .
+      dockerfile: Dito.Autocomplete/Dockerfile
+    environment:
+      MongoDB__Host: mongo
+    depends_on:
+      - mongo
