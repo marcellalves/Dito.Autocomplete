@@ -89,5 +89,96 @@ namespace Dito.Autocomplete.UnitTests
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => service.GetById(string.Empty));
         }
+
+        [Fact]
+        public async Task Create_ValidData_InsertedDocumentId()
+        {
+            var repository = new Mock<IUserActivityRepository>();
+
+            var expectedDocumentId = "5e1b9429757df200173c6c36";
+
+            repository.Setup(r => r.Create(It.IsAny<UserActivity>())).ReturnsAsync(expectedDocumentId);
+
+            var service = new UserActivityService(repository.Object);
+
+            var insertedDocumentId = await service.Create(new UserActivity("buy", "2016-09-22T13:57:31.2311892-04:00"));
+
+            Assert.Equal(expectedDocumentId, insertedDocumentId);
+        }
+
+        [Fact]
+        public async Task Create_NullObject_ArgumentNullException()
+        {
+            var repository = new Mock<IUserActivityRepository>();
+
+            var expectedDocumentId = "5e1b9429757df200173c6c36";
+
+            repository.Setup(r => r.Create(It.IsAny<UserActivity>())).ReturnsAsync(expectedDocumentId);
+
+            var service = new UserActivityService(repository.Object);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() =>
+            service.Create(null));
+        }
+
+        [Fact]
+        public async Task Create_NullEvent_ArgumentException()
+        {
+            var repository = new Mock<IUserActivityRepository>();
+
+            var expectedDocumentId = "5e1b9429757df200173c6c36";
+
+            repository.Setup(r => r.Create(It.IsAny<UserActivity>())).ReturnsAsync(expectedDocumentId);
+
+            var service = new UserActivityService(repository.Object);
+
+            await Assert.ThrowsAsync<ArgumentException>(() => 
+            service.Create(new UserActivity(null, "2016-09-22T13:57:31.2311892-04:00")));
+        }
+
+        [Fact]
+        public async Task Create_EmptyEvent_ArgumentException()
+        {
+            var repository = new Mock<IUserActivityRepository>();
+
+            var expectedDocumentId = "5e1b9429757df200173c6c36";
+
+            repository.Setup(r => r.Create(It.IsAny<UserActivity>())).ReturnsAsync(expectedDocumentId);
+
+            var service = new UserActivityService(repository.Object);
+
+            await Assert.ThrowsAsync<ArgumentException>(() =>
+            service.Create(new UserActivity(string.Empty, "2016-09-22T13:57:31.2311892-04:00")));
+        }
+
+        [Fact]
+        public async Task Create_NullTimeStamp_ArgumentException()
+        {
+            var repository = new Mock<IUserActivityRepository>();
+
+            var expectedDocumentId = "5e1b9429757df200173c6c36";
+
+            repository.Setup(r => r.Create(It.IsAny<UserActivity>())).ReturnsAsync(expectedDocumentId);
+
+            var service = new UserActivityService(repository.Object);
+
+            await Assert.ThrowsAsync<ArgumentException>(() =>
+            service.Create(new UserActivity("buy", null)));
+        }
+
+        [Fact]
+        public async Task Create_EmptyTimeStamp_ArgumentException()
+        {
+            var repository = new Mock<IUserActivityRepository>();
+
+            var expectedDocumentId = "5e1b9429757df200173c6c36";
+
+            repository.Setup(r => r.Create(It.IsAny<UserActivity>())).ReturnsAsync(expectedDocumentId);
+
+            var service = new UserActivityService(repository.Object);
+
+            await Assert.ThrowsAsync<ArgumentException>(() =>
+            service.Create(new UserActivity("buy", string.Empty)));
+        }
     }
 }
