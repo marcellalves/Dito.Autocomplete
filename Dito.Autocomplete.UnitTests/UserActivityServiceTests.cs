@@ -101,7 +101,11 @@ namespace Dito.Autocomplete.UnitTests
 
             var service = new UserActivityService(repository.Object);
 
-            var insertedDocumentId = await service.Create(new UserActivity("buy", "2016-09-22T13:57:31.2311892-04:00"));
+            var insertedDocumentId = await service.Create(new UserActivityRequest
+            {
+                Event = "buy",
+                TimeStamp = "2016-09-22T13:57:31.2311892-04:00"
+            });
 
             Assert.Equal(expectedDocumentId, insertedDocumentId);
         }
@@ -133,7 +137,11 @@ namespace Dito.Autocomplete.UnitTests
             var service = new UserActivityService(repository.Object);
 
             await Assert.ThrowsAsync<ArgumentException>(() => 
-            service.Create(new UserActivity(null, "2016-09-22T13:57:31.2311892-04:00")));
+            service.Create(new UserActivityRequest
+            {
+                Event = null,
+                TimeStamp = "2016-09-22T13:57:31.2311892-04:00"
+            }));
         }
 
         [Fact]
@@ -148,7 +156,11 @@ namespace Dito.Autocomplete.UnitTests
             var service = new UserActivityService(repository.Object);
 
             await Assert.ThrowsAsync<ArgumentException>(() =>
-            service.Create(new UserActivity(string.Empty, "2016-09-22T13:57:31.2311892-04:00")));
+            service.Create(new UserActivityRequest
+            {
+                Event = string.Empty,
+                TimeStamp = "2016-09-22T13:57:31.2311892-04:00"
+            }));
         }
 
         [Fact]
@@ -163,7 +175,11 @@ namespace Dito.Autocomplete.UnitTests
             var service = new UserActivityService(repository.Object);
 
             await Assert.ThrowsAsync<ArgumentException>(() =>
-            service.Create(new UserActivity("buy", null)));
+            service.Create(new UserActivityRequest
+            {
+                Event = "buy",
+                TimeStamp = null
+            }));
         }
 
         [Fact]
@@ -178,7 +194,7 @@ namespace Dito.Autocomplete.UnitTests
             var service = new UserActivityService(repository.Object);
 
             await Assert.ThrowsAsync<ArgumentException>(() =>
-            service.Create(new UserActivity("buy", string.Empty)));
+            service.Create(new UserActivityRequest { Event = "buy", TimeStamp = string.Empty }));
         }
     }
 }

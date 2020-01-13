@@ -10,7 +10,7 @@ namespace Dito.Autocomplete.Infrastructure.Services
     {
         Task<IEnumerable<UserActivity>> GetAll();
         Task<UserActivity> GetById(string id);
-        Task<string> Create(UserActivity model);
+        Task<string> Create(UserActivityRequest request);
     }
 
     public class UserActivityService : IUserActivityService
@@ -35,18 +35,18 @@ namespace Dito.Autocomplete.Infrastructure.Services
             return await _userActivityRepository.GetById(id);
         }
 
-        public async Task<string> Create(UserActivity model)
+        public async Task<string> Create(UserActivityRequest request)
         {
-            if (model == null)
+            if (request == null)
                 throw new ArgumentNullException("O objeto de atividade de usuário não pode ser nulo.");
 
-            if (string.IsNullOrEmpty(model.Event))
+            if (string.IsNullOrEmpty(request.Event))
                 throw new ArgumentException("O campo event é obrigatório.");
 
-            if (string.IsNullOrEmpty(model.TimeStamp))
+            if (string.IsNullOrEmpty(request.TimeStamp))
                 throw new ArgumentException("O campo time stamp é obrigatório.");
 
-            return await _userActivityRepository.Create(model);
+            return await _userActivityRepository.Create(new UserActivity(request.Event, request.TimeStamp));
         }
     }
 }

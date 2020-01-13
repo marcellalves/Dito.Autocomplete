@@ -1,6 +1,9 @@
-﻿using Dito.Autocomplete.Infrastructure.Repositories;
+﻿using Dito.Autocomplete.Infrastructure.Services;
 using Dito.Autocomplete.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Dito.Autocomplete.Controllers
@@ -8,24 +11,42 @@ namespace Dito.Autocomplete.Controllers
     [Route("[controller]")]
     public class UserActivityController : Controller
     {
-        private readonly IUserActivityRepository _repo;
+        private readonly IUserActivityService _userActivityService;
 
-        public UserActivityController(IUserActivityRepository repo)
+        public UserActivityController(IUserActivityService userActivityService)
         {
-            _repo = repo;
+            _userActivityService = userActivityService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        [ProducesResponseType(typeof(IEnumerable<UserActivity>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Exception), (int)HttpStatusCode.InternalServerError)]
+        public async Task<ActionResult<IEnumerable<UserActivity>>> Get()
         {
-            return new OkObjectResult(await _repo.GetAll());
+            try
+            {
+                return new OkObjectResult(await _userActivityService.GetAll());
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] UserActivity userActivity)
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Exception), (int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> Post([FromBody] UserActivityRequest request)
         {
-            await _repo.Create(userActivity);
-            return new OkResult();
+            try
+            {
+                await _userActivityService.Create(request);
+                return new OkResult();
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
     }
 }

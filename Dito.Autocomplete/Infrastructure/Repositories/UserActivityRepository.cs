@@ -1,4 +1,5 @@
 ﻿using Dito.Autocomplete.Models;
+using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Collections.Generic;
@@ -15,11 +16,11 @@ namespace Dito.Autocomplete.Infrastructure.Repositories
 
     public class UserActivityRepository : IUserActivityRepository
     {
-        private readonly IUserActivityContext _context;
+        private readonly UserActivityContext _context;
 
-        public UserActivityRepository(IUserActivityContext context)
+        public UserActivityRepository(IOptions<MongoDbConfig> dbConfig)
         {
-            _context = context;
+            _context = new UserActivityContext(dbConfig);
         }
 
         public async Task<long> GetNextId()

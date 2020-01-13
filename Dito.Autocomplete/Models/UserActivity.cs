@@ -3,8 +3,18 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Dito.Autocomplete.Models
 {
+    public class UserActivityRequest
+    {
+        public string Event { get; set; }
+        public string TimeStamp { get; set; }
+    }
+
     public class UserActivity
     {
+        public UserActivity()
+        {
+        }
+
         public UserActivity(string userEvent, string timeStamp)
         {
             Event = userEvent;

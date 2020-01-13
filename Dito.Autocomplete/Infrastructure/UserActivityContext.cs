@@ -1,22 +1,21 @@
 ﻿using Dito.Autocomplete.Models;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using System;
 
 namespace Dito.Autocomplete.Infrastructure
 {
-    public interface IUserActivityContext
+    public class UserActivityContext
     {
-        IMongoCollection<UserActivity> UserActivities { get; }
-    }
+        private readonly IMongoDatabase _db = null;
 
-    public class UserActivityContext : IUserActivityContext
-    {
-        private readonly IMongoDatabase _db;
-
-        public UserActivityContext(MongoDbConfig config)
+        public UserActivityContext(IOptions<MongoDbConfig> dbConfig)
         {
-            //var client = new MongoClient(config.ConnectionString);
-            var client = new MongoClient("mongodb://mongo");
-            _db = client.GetDatabase(config.Database);
+            var client = new MongoClient(dbConfig.Value.ConnectionString);
+            if (client != null)
+                _db = client.GetDatabase(dbConfig.Value.Database);
+            else
+                throw new Exception("Banco de dados fora do ar.");
         }
 
         public IMongoCollection<UserActivity> UserActivities => _db.GetCollection<UserActivity>("UserActivities");
