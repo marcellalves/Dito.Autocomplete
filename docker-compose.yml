@@ -13,7 +13,7 @@ volumes:
 services:
   monstache:
     image: rwynn/monstache:6.4.1
-    container_name: c-monstache
+    container_name: monstache
     working_dir: /app
     command: -f ./monstache.config.toml
     volumes:
@@ -70,6 +70,7 @@ services:
   es7:
     build:
       context: elk/elasticsearch/
+    container_name: elasticsearch
     volumes:
       - ./elk/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
     ports:

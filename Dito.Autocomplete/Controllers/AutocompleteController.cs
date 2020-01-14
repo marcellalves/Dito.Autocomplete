@@ -10,11 +10,11 @@ namespace Dito.Autocomplete.Controllers
 {
     public class AutocompleteController : Controller
     {
-        private readonly IUserActivityService _userActivityService;
+        private readonly IAutocompleteService _autocompleteService;
 
-        public AutocompleteController(IUserActivityService userActivityService)
+        public AutocompleteController(IAutocompleteService autocompleteService)
         {
-            _userActivityService = userActivityService;
+            _autocompleteService = autocompleteService;
         }
 
         [HttpGet]
@@ -24,7 +24,7 @@ namespace Dito.Autocomplete.Controllers
         {
             try
             {
-                return new OkObjectResult(await _userActivityService.GetByTerm(term));
+                return new OkObjectResult(await _autocompleteService.GetByTerm(term));
             }
             catch (Exception ex)
             {
