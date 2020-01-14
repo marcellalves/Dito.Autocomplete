@@ -1,9 +1,83 @@
 version: '3.4'
 
+volumes:
+  esdata1:
+    driver: local
+  mongodb_repl_data1:
+    external: true
+  mongodb_repl_data2:
+    external: true
+  mongodb_repl_data3:
+    external: true
+
 services:
-  mongo:
-    image: mongo
+  monstache:
+    image: rwynn/monstache:6.4.1
+    container_name: c-monstache
+    working_dir: /app
+    command: -f ./monstache.config.toml
+    volumes:
+      - ./monstache.config.toml:/app/monstache.config.toml
+    depends_on:
+      - mongo0
+      - mongo1
+      - mongo2
+      - es7
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: "wget -q -O - http://localhost:8080/healthz"
+      interval: 10s
+      timeout: 30s
+      retries: 300
+    restart: unless-stopped
+  mongo0:
+    hostname: mongo0
+    container_name: mongo0
+    image: mongo:latest
+    expose:
+      - 30000
+    ports:
+      - 30000:30000
+    volumes:
+      - 'mongodb_repl_data1:/data/db:z'
     restart: always
+    command: "--bind_ip_all --replSet rs0 --port 30000"
+  mongo1:
+    hostname: mongo1
+    container_name: mongo1
+    image: mongo:latest
+    expose:
+      - 30001
+    ports:
+      - 30001:30001
+    volumes:
+      - 'mongodb_repl_data2:/data/db:z'
+    restart: always
+    command: "--bind_ip_all --replSet rs0 --port 30001"
+  mongo2:
+    hostname: mongo2
+    container_name: mongo2
+    image: mongo:latest
+    expose:
+      - 30002
+    ports:
+      - 30002:30002
+    volumes:
+      - 'mongodb_repl_data3:/data/db:z'
+    restart: always
+    command: "--bind_ip_all --replSet rs0 --port 30002"
+  es7:
+    build:
+      context: elk/elasticsearch/
+    volumes:
+      - ./elk/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+    restart: unless-stopped
   dito.autocomplete:
     image: ${DOCKER_REGISTRY-}ditoautocomplete
     build:
@@ -12,4 +86,6 @@ services:
     environment:
       MongoDB__Host: mongo
     depends_on:
-      - mongo
+      - mongo0
+      - mongo1
+      - mongo2

@@ -1,0 +1,11 @@
+mongo-url = "mongodb://mongo0:30000,mongo1:30001,mongo2:30002/?replicaSet=rs0"
+
+elasticsearch-urls = ["http://es7:9200"]
+elasticsearch-max-seconds = 5
+elasticsearch-max-conns = 6
+
+change-stream-namespaces = [""]
+
+verbose = false
+
+enable-http-server = true

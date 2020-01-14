@@ -11,6 +11,11 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dito.Autocomplete.UnitTests", "Dito.Autocomplete.UnitTests\Dito.Autocomplete.UnitTests.csproj", "{F5FAFDC3-7BB3-4250-BF23-671D51470CF9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "elasticsearch", "elasticsearch", "{58A5F601-FE30-4622-BB68-D61F2AC180B1}"
+	ProjectSection(SolutionItems) = preProject
+		elasticsearch.yml = elasticsearch.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

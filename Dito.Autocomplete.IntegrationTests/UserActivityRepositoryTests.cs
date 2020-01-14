@@ -1,3 +1,4 @@
+using Dito.Autocomplete.Controllers;
 using Dito.Autocomplete.Infrastructure.Repositories;
 using Dito.Autocomplete.Models;
 using Microsoft.Extensions.Configuration;
@@ -29,20 +30,20 @@ namespace Dito.Autocomplete.IntegrationTests
             _scopeFactory = provider.GetService<IServiceScopeFactory>();
         }
 
-        [Fact]
-        public async Task should_add_new_user_activity()
-        {
-            using(var scope = _scopeFactory.CreateScope())
-            {
-                var repo = scope.ServiceProvider.GetService<IUserActivityRepository>();
+        //[Fact]
+        //public async Task should_add_new_user_activity()
+        //{
+        //    using(var scope = _scopeFactory.CreateScope())
+        //    {
+        //        //var repo = scope.ServiceProvider.GetService<IUserActivityRepository>();
 
-                var newUserActivity = new UserActivity("buy", "2016-09-22T13:57:31.2311892-04:00");
+        //        //var newUserActivity = new UserActivity("buy", "2016-09-22T13:57:31.2311892-04:00");
 
-                var insertedId = await repo.Create(newUserActivity);
-                var expected = await repo.GetById(insertedId);
+        //        //var insertedId = await repo.Create(newUserActivity);
+        //        //var expected = await repo.GetById(insertedId);
 
-                Assert.Equal(expected.Event, newUserActivity.Event);
-            }
-        }
+        //        //Assert.Equal(expected.Event, newUserActivity.Event);
+        //    }
+        //}
     }
 }
