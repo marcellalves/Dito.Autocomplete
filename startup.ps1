@@ -1,0 +1,1 @@
+docker-compose -f "./docker-compose.yml" -f "./docker-compose.override.yml" -f "./docker-compose.vs.debug.g.yml" -p dockercompose4726550711482581797 --no-ansi up -d

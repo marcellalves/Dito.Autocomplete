@@ -1,0 +1,15 @@
+1 - Rodar os containers do projeto com um dos seguintes scripts:
+	- startup.sh (para rodar com bash)
+	- startup.ps1 (para rodar com PowerShell)
+	
+2 - Rodar o script de criação do índice e do mapeamento no Elasticsearch:
+	- es_index_setup.sh (para rodar com bash)
+	- es_index_setup.ps1 (para rodar com PowerShell)
+
+3 - Criar o cluster de MongoDB para habilitar a sincronização do monstache:
+	3.1 - Conectar no container do MongoDB:
+		docker exec -it mongo0 mongo --port 30000
+
+	3.2 - Dentro do shell do container do MongoDB, executar:
+		config={"_id":"rs0","members":[{"_id":0,"host":"mongo0:30000"},{"_id":1,"host":"mongo1:30001"},{"_id":2,"host":"mongo2:30002"}]}
+		rs.initiate(config);

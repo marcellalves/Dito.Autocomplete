@@ -1,0 +1,60 @@
+{
+	"info": {
+		"_postman_id": "bcb2b867-ab94-49f1-bfda-af7c40f31b48",
+		"name": "Dito.Autocomplete",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CreateUserActivity",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"event\":\"click\",\"timestamp\":\"2016-09-22T13:57:31.2311892-04:00\"}"
+				},
+				"url": {
+					"raw": "https://localhost:32796/UserActivity",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "32796",
+					"path": [
+						"UserActivity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Teste autocomplete",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:32774/Autocomplete/bu",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "32774",
+					"path": [
+						"Autocomplete",
+						"bu"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

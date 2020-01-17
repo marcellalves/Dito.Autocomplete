@@ -9,19 +9,48 @@ import (
 
 func Process(input *monstachemap.ProcessPluginInput) (err error) {
 	var infoLog = log.New(os.Stdout, "INFO ", log.Flags())
-	infoLog.Printf("Iniciou a execução do mérodo Process")
+	infoLog.Printf("Iniciou a execução do método Process")
+
+	indexName := "autocomplete_index"
+
+	index := `{
+		"settings" : {
+			"number_of_shards": 1,
+			"analysis": {
+				"filter": {
+					"autocomplete_filter": {
+						"type": "edge_ngram",
+                        "min_gram": 2,
+                        "max_gram": 20
+					}
+				},
+				"analyzer": {
+					"autocomplete": {
+						"type": "custom",
+                        "tokenizer": "standard",
+                        "filter": [
+                            "lowercase",
+                            "autocomplete_filter"
+                        ]
+					}
+				}
+			}
+	}`
+
+	input.ElasticClient.CreateIndex(indexName).BodyString(index)
 
 	mapping := `{
-		"properties" : {
-			"Event" : { "type" : "string" },
-			"suggest" : { "type" : "completion",
-							"analyzer" : "simple",
-							"search_analyzer" : "simple",
-							"payloads" : true
+		"properties": {
+			"Event": {
+				"type": "text",
+				"analyzer": "autocomplete"
+			},
+			"TimeStamp": {
+				"type": "text"
 			}
 		}
 	}`
 
-	input.ElasticClient.PutMapping().Index("useractivitydb.useractivities").BodyString(mapping)
+	input.ElasticClient.PutMapping().Index(indexName).BodyString(mapping)
 	return
 }

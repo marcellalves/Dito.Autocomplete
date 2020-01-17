@@ -1,5 +1,5 @@
 curl -H 'Content-Type: application/json' \
-       -X PUT http://localhost:9200/autocomplete_index \
+       -X PUT http://es7:9200/autocomplete_index \
        -d \
       "{ \
           \"settings\": { \
@@ -27,7 +27,7 @@ curl -H 'Content-Type: application/json' \
       }"
 
 curl -H 'Content-Type: application/json' \
-        -X PUT http://localhost:9200/autocomplete_index/_mapping \
+        -X PUT http://es7:9200/autocomplete_index/_mapping \
         -d \
        "{ \
 		   \"properties\": { \
