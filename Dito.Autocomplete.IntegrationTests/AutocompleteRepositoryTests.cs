@@ -12,7 +12,7 @@ namespace Dito.Autocomplete.IntegrationTests
         {
             var repository = new AutocompleteRepository();
 
-            var result = await repository.GetByTerm("build");
+            var result = await repository.GetByTerm("bu");
 
             Assert.True(result.Any());
         }

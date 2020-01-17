@@ -1,5 +1,7 @@
-﻿using MongoDB.Bson;
+﻿using System;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Nest;
 
 namespace Dito.Autocomplete.Models
 {
@@ -7,6 +9,16 @@ namespace Dito.Autocomplete.Models
     {
         public string Event { get; set; }
         public string TimeStamp { get; set; }
+    }
+
+    [ElasticsearchType(RelationName = "_doc")]
+    public class UserActivityResponse
+    {
+        [Completion]
+        [PropertyName("Event")]
+        public string Event { get; set; }
+
+        public DateTimeOffset TimeStamp { get; set; }
     }
 
     public class UserActivity

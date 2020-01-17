@@ -9,10 +9,10 @@ namespace Dito.Autocomplete.Infrastructure.Services
 {
     public interface IAutocompleteService
     {
-        Task<IEnumerable<UserActivity>> GetByTerm(string term);
+        Task<IEnumerable<UserActivityResponse>> GetByTerm(string term);
     }
 
-    public class AutocompleteService
+    public class AutocompleteService : IAutocompleteService
     {
         private readonly IAutocompleteRepository _autocompleteRepository;
 
@@ -21,7 +21,7 @@ namespace Dito.Autocomplete.Infrastructure.Services
             _autocompleteRepository = autocompleteRepository;
         }
 
-        public async Task<IEnumerable<object>> GetByTerm(string term)
+        public async Task<IEnumerable<UserActivityResponse>> GetByTerm(string term)
         {
             if (string.IsNullOrEmpty(term))
                 throw new ArgumentNullException("O termo pesquisado não pode ser nulo ou vazio.");
@@ -29,7 +29,7 @@ namespace Dito.Autocomplete.Infrastructure.Services
             if (term.Length < 2)
                 throw new ArgumentOutOfRangeException("Pesquise um termo com ao menos 2 caracteres.");
 
-            var result = new List<object>();
+            var result = new List<UserActivityResponse>();
 
             var searchResult = await _autocompleteRepository.GetByTerm(term);
             if (searchResult != null && searchResult.Any())

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Dito.Autocomplete.Controllers
 {
+    [Route("[controller]")]
     public class AutocompleteController : Controller
     {
         private readonly IAutocompleteService _autocompleteService;
@@ -20,7 +21,7 @@ namespace Dito.Autocomplete.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<UserActivity>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(Exception), (int)HttpStatusCode.InternalServerError)]
-        public async Task<ActionResult<IEnumerable<UserActivity>>> Get(string term)
+        public async Task<ActionResult<IEnumerable<UserActivityResponse>>> Get(string term)
         {
             try
             {

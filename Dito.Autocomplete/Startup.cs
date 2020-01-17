@@ -28,6 +28,8 @@ namespace Dito.Autocomplete
 
             services.AddTransient<IUserActivityService, UserActivityService>();
             services.AddTransient<IUserActivityRepository, UserActivityRepository>();
+            services.AddTransient<IAutocompleteService, AutocompleteService>();
+            services.AddTransient<IAutocompleteRepository, AutocompleteRepository>();
 
             services.AddSwaggerGen(c =>
             {

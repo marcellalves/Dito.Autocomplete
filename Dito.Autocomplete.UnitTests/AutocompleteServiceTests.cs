@@ -19,11 +19,11 @@ namespace Dito.Autocomplete.UnitTests
 
             var existingValidSearchTerm = "bu";
 
-            repository.Setup(r => r.GetByTerm(existingValidSearchTerm)).ReturnsAsync(new List<UserActivity>
+            repository.Setup(r => r.GetByTerm(existingValidSearchTerm)).ReturnsAsync(new List<UserActivityRequestES>
             {
-                new UserActivity("buy", "2016-09-22T13:57:31.2311892-04:00"),
-                new UserActivity("buy", "2016-10-22T13:57:31.2311892-04:00"),
-                new UserActivity("build", "2016-10-23T13:57:31.2311892-04:00"),
+                new UserActivityRequestES { Event = "buy", TimeStamp = "2016-09-22T13:57:31.2311892-04:00" },
+                new UserActivityRequestES { Event = "buy",  TimeStamp = "2016-10-22T13:57:31.2311892-04:00" },
+                new UserActivityRequestES { Event = "build",  TimeStamp = "2016-10-23T13:57:31.2311892-04:00" }
             });
 
             var service = new AutocompleteService(repository.Object);
@@ -38,11 +38,11 @@ namespace Dito.Autocomplete.UnitTests
         {
             var repository = new Mock<IAutocompleteRepository>();
 
-            repository.Setup(r => r.GetByTerm("bu")).ReturnsAsync(new List<UserActivity>
+            repository.Setup(r => r.GetByTerm("bu")).ReturnsAsync(new List<UserActivityRequestES>
             {
-                new UserActivity("buy", "2016-09-22T13:57:31.2311892-04:00"),
-                new UserActivity("buy", "2016-10-22T13:57:31.2311892-04:00"),
-                new UserActivity("build", "2016-10-23T13:57:31.2311892-04:00"),
+                new UserActivityRequestES { Event = "buy", TimeStamp = "2016-09-22T13:57:31.2311892-04:00" },
+                new UserActivityRequestES { Event = "buy", TimeStamp = "2016-10-22T13:57:31.2311892-04:00" },
+                new UserActivityRequestES { Event = "build", TimeStamp = "2016-10-23T13:57:31.2311892-04:00" }
             });
 
             var service = new AutocompleteService(repository.Object);
@@ -58,7 +58,7 @@ namespace Dito.Autocomplete.UnitTests
             var repository = new Mock<IAutocompleteRepository>();
 
             repository.Setup(r => r.GetByTerm(It.IsAny<string>()))
-                .ReturnsAsync(It.IsAny<IEnumerable<UserActivity>>());
+                .ReturnsAsync(It.IsAny<IEnumerable<UserActivityRequestES>>());
 
             var service = new AutocompleteService(repository.Object);
 
@@ -71,7 +71,7 @@ namespace Dito.Autocomplete.UnitTests
             var repository = new Mock<IAutocompleteRepository>();
 
             repository.Setup(r => r.GetByTerm(It.IsAny<string>()))
-                .ReturnsAsync(It.IsAny<IEnumerable<UserActivity>>());
+                .ReturnsAsync(It.IsAny<IEnumerable<UserActivityRequestES>>());
 
             var service = new AutocompleteService(repository.Object);
 
@@ -84,7 +84,7 @@ namespace Dito.Autocomplete.UnitTests
             var repository = new Mock<IAutocompleteRepository>();
 
             repository.Setup(r => r.GetByTerm(It.IsAny<string>()))
-                .ReturnsAsync(It.IsAny<IEnumerable<UserActivity>>());
+                .ReturnsAsync(It.IsAny<IEnumerable<UserActivityRequestES>>());
 
             var service = new AutocompleteService(repository.Object);
 
