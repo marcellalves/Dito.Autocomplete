@@ -17,7 +17,6 @@ services:
     command: -f ./monstache.config.toml
     volumes:
       - ./monstache/monstache.config.toml:/app/monstache.config.toml
-      - ./monstache/plugin/autocomplete_plugin.so:/app/autocomplete_plugin.so
     depends_on:
       - mongo0
       - mongo1
