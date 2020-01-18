@@ -1,42 +1,20 @@
 curl -H 'Content-Type: application/json' \
-       -X PUT http://localhost:9200/autocomplete_index \
-       -d \
-      "{ \
-          \"settings\": { \
-              \"number_of_shards\": 1, \
-              \"analysis\": { \
-                  \"filter\": { \
-                      \"autocomplete_filter\": { \
-                          \"type\":     \"edge_ngram\", \
-                          \"min_gram\": 2, \
-                          \"max_gram\": 20 \
-                      } \
-                  }, \
-                  \"analyzer\": { \
-                      \"autocomplete\": { \
-                          \"type\":      \"custom\", \
-                          \"tokenizer\": \"standard\", \
-                          \"filter\": [ \
-                              \"lowercase\", \
-                              \"autocomplete_filter\" \
-                          ] \
-                      } \
-                  } \
-              } \
-          } \
-      }"
+       -X PUT http://localhost:9200/autocomplete_index
 
 curl -H 'Content-Type: application/json' \
         -X PUT http://localhost:9200/autocomplete_index/_mapping \
         -d \
        "{ \
-		   \"properties\": { \
-			   \"Event\": { \
-				   \"type\":     \"text\", \
-				   \"analyzer\": \"autocomplete\" \
-			   }, \
-			   \"TimeStamp\": { \
-				   \"type\":    \"text\" \
-			   } \
-		   } \
+            \"properties\": { \
+               \"event\": { \
+                  \"type\": \"completion\", \
+                  \"analyzer\": \"simple\", \
+                  \"preserve_separators\": true, \
+                  \"preserve_position_increments\": true, \
+                  \"max_input_length\": 50 \
+               }, \
+               \"timeStamp\": { \
+                  \"type\": \"text\" \
+               } \
+            }\
        }"

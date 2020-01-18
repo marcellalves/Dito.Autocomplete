@@ -14,11 +14,11 @@ namespace Dito.Autocomplete.Models
     [ElasticsearchType(RelationName = "_doc")]
     public class UserActivityResponse
     {
-        [Completion]
-        [PropertyName("Event")]
         public string Event { get; set; }
 
         public DateTimeOffset TimeStamp { get; set; }
+
+        public double Score { get; set; }
     }
 
     public class UserActivity
@@ -36,6 +36,7 @@ namespace Dito.Autocomplete.Models
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; private set; }
+        [PropertyName("event")]
         public string Event { get; private set; }
         public string TimeStamp { get; private set; }
     }

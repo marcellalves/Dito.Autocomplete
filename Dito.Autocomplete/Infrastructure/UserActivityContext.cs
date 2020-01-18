@@ -1,6 +1,7 @@
 ﻿using System;
 using Dito.Autocomplete.Models;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 
 namespace Dito.Autocomplete.Infrastructure
@@ -25,6 +26,9 @@ namespace Dito.Autocomplete.Infrastructure
                 ConnectionMode = ConnectionMode.ReplicaSet,
                 ReplicaSetName = _dbConfig.Value.ReplicaSetName
             };
+
+            var conventionPack = new ConventionPack { new CamelCaseElementNameConvention() };
+            ConventionRegistry.Register("camelCase", conventionPack, t => true);
 
             var client = new MongoClient(settings); 
             _db = client.GetDatabase(_dbConfig.Value.Database);
