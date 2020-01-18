@@ -10,11 +10,10 @@ Para o problema proposto, considerando as condições de escalabilidade e tempo 
 # Arquitetura da solução
 
 ## Inclusão de eventos de usuário
-
-![Desenho arquitetural da inclusão de eventos](https://drive.google.com/uc?export=view&id=10Zif_-u9k2HtMLK1lLt5ISKYxrRj3BRb)
+![Desenho arquitetural da consulta de autocomplete](https://drive.google.com/uc?export=view&id=1hQgOgTHaYMwR1n9w0WOkSZCHEeWrkPUY)
 
 ## Pesquisa de termo para autocomplete
-![Desenho arquitetural da consulta de autocomplete](https://drive.google.com/uc?export=view&id=1hQgOgTHaYMwR1n9w0WOkSZCHEeWrkPUY)
+![Desenho arquitetural da inclusão de eventos](https://drive.google.com/uc?export=view&id=10Zif_-u9k2HtMLK1lLt5ISKYxrRj3BRb)
 
 # Executando a aplicação
 
