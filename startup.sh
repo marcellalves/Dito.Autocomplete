@@ -1,1 +1,1 @@
-docker-compose -f "./docker-compose.yml" -f "./docker-compose.override.yml" -p dockercompose4726550711482581797 --no-ansi up
+docker-compose -f "./docker-compose.yml" -f "./docker-compose.override.yml" -p dockercompose4726550711482581797 --no-ansi up -d

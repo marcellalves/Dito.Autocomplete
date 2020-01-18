@@ -1,44 +1,21 @@
 $UrlIndex = "http://localhost:9200/autocomplete_index"
-$BodyIndex = @'
-{
-    "settings": {
-        "number_of_shards": 1,
-        "analysis": {
-            "filter": {
-                "autocomplete_filter": {
-                    "@type": "edge_ngram",
-                    "min_gram": 2,
-                    "max_gram": 20
-                }
-            },
-            "analyzer": {
-                "autocomplete": {
-                    "@type": "custom",
-                    "tokenizer": "standard\",
-                    "filter": [
-                        "lowercase",
-                        "autocomplete_filter"
-                    ] 
-                }
-            }
-        }
-    }
-}
-'@
 
-Invoke-RestMethod -Uri $UrlIndex -Body $BodyIndex -Method Put -ContentType 'application/json'
+Invoke-RestMethod -Uri $UrlIndex -Method Put -ContentType 'application/json'
 
 $UrlMapping = "http://localhost:9200/autocomplete_index/_mapping"
 $BodyMapping = @'
 {
     "properties": {
-        "Event": {
-            "@type": "text",
-            "analyzer": "autocomplete"
-        },
-        "TimeStamp": {
-            "@type": "text"
-        }
+       "event": {
+          "type": "completion",
+          "analyzer": "simple",
+          "preserve_separators": true,
+          "preserve_position_increments": true,
+          "max_input_length": 50
+       },
+       "timeStamp": {
+          "type": "text"
+       }
     }
 }
 '@
