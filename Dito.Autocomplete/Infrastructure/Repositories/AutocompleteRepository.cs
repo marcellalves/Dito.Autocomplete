@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dito.Autocomplete.Models;
+using Microsoft.Extensions.Options;
 using Nest;
 
 namespace Dito.Autocomplete.Infrastructure.Repositories
@@ -17,11 +18,11 @@ namespace Dito.Autocomplete.Infrastructure.Repositories
         private readonly ConnectionSettings _settings;
         private readonly ElasticClient _client;
 
-        public AutocompleteRepository()
+        public AutocompleteRepository(IOptions<ElasticsearchConfig> esConfig)
         {
-            _node = new Uri("http://es7:9200");
-            _settings = new ConnectionSettings(_node).DefaultIndex("autocomplete_index");
-            _settings.DisableDirectStreaming(true);
+            _node = new Uri(esConfig.Value.ElasticsearchUrl);
+            _settings = new ConnectionSettings(_node).DefaultIndex(esConfig.Value.IndexName);
+            _settings.DisableDirectStreaming();
             _client = new ElasticClient(_settings);
         }
 

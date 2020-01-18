@@ -25,6 +25,7 @@ namespace Dito.Autocomplete
             services.AddControllers();
 
             services.Configure<MongoDbConfig>(Configuration);
+            services.Configure<ElasticsearchConfig>(Configuration);
 
             services.AddTransient<IUserActivityService, UserActivityService>();
             services.AddTransient<IUserActivityRepository, UserActivityRepository>();

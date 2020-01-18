@@ -23,11 +23,6 @@ namespace Dito.Autocomplete.Infrastructure.Repositories
             _context = new UserActivityContext(dbConfig);
         }
 
-        public async Task<long> GetNextId()
-        {
-            return await _context.UserActivities.CountDocumentsAsync(new BsonDocument()) + 1;
-        }
-
         public async Task<string> Create(UserActivity model)
         {
             await _context.UserActivities.InsertOneAsync(model);

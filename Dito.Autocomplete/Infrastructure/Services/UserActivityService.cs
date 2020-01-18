@@ -11,7 +11,6 @@ namespace Dito.Autocomplete.Infrastructure.Services
         Task<IEnumerable<UserActivity>> GetAll();
         Task<UserActivity> GetById(string id);
         Task<string> Create(UserActivityRequest request);
-        Task<IEnumerable<UserActivity>> GetByTerm(string term);
     }
 
     public class UserActivityService : IUserActivityService
@@ -48,11 +47,6 @@ namespace Dito.Autocomplete.Infrastructure.Services
                 throw new ArgumentException("O campo time stamp é obrigatório.");
 
             return await _userActivityRepository.Create(new UserActivity(request.Event, request.TimeStamp));
-        }
-
-        public Task<IEnumerable<UserActivity>> GetByTerm(string term)
-        {
-            throw new NotImplementedException();
         }
     }
 }
